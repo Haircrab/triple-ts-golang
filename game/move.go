@@ -1,6 +1,9 @@
 package game
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
 type move struct {
 	r, c int
@@ -12,7 +15,7 @@ func InitMove(r, c, x int) (*move, error) {
 	mv := &move{
 		r: r,
 		c: c,
-		x: c,
+		x: x,
 	}
 	if err := checkMove(*mv); err != nil {
 		return nil, err
@@ -45,6 +48,9 @@ func (gs *gameState) mutCell(r, c, x, pyerIdx int) error {
 		return errors.New("circle value must be 0 to 2")
 	}
 
-	gs.board[r][c][x] = pyerIdx
+	board := &(gs.board)
+
+	fmt.Printf("player %v making move in %v %v %v \n", pyerIdx, r, c, x)
+	board[r][c][x] = pyerIdx
 	return nil
 }
