@@ -79,15 +79,9 @@ func (gs *gameState) MakeMove(pyer player, mv move) (bool, error) {
 
 // player's move should be already checked and made to the baord
 // tranverse board and check winning conditions
-// let move = r,c and player = Red
-// C1: board[r][c][0] == board[r][c][1] == board[r][c][2] == Red
-// C2: Diagonally, 2->1->0 == Red or 0->1->2 == Red
-// C3: Vertically or Horizontally, 2->1->0 == Red or 0->1->2 == Red
 func (gs *gameState) checkWin(pyer player, mv move) bool {
-	mr, mc, mx := mv.r, mv.c, mv.x
-
 	// board states
-	currCell := gs.board[mr][mc]
+	currCell := gs.board[mv.r][mv.c]
 
 	// check if player occupied all slots in same cell
 	if checkSameCell(pyer, currCell) {
@@ -96,7 +90,9 @@ func (gs *gameState) checkWin(pyer player, mv move) bool {
 
 	// check all direction
 	for _, plane := range PLANES {
-		checkCrossCells(pyer.id, &(gs.board), plane, mr, mc, mx, N)
+		if checkCrossCells(pyer.id, &(gs.board), plane, mv.r, mv.c, mv.x, N) {
+			return true
+		}
 	}
 
 	return false
