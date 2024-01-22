@@ -89,6 +89,7 @@ func (gs *gameState) checkWin(pyer player, mv move) bool {
 	}
 
 	// check all direction
+	// TODO: seperate checking condition in parallel
 	for _, plane := range PLANES {
 		if checkCrossCells(pyer.id, &(gs.board), plane, mv.r, mv.c, mv.x, N) {
 			return true
@@ -99,7 +100,6 @@ func (gs *gameState) checkWin(pyer player, mv move) bool {
 }
 
 func checkSameCell(pyer player, cell boardCellState) bool {
-	// equals to N in NxN matrix
 	for _, v := range cell {
 		if v != pyer.id {
 			return false
