@@ -95,12 +95,8 @@ func (gs *gameState) checkWin(pyer player, mv move) bool {
 	}
 
 	// check all direction
-	if mr == mx || mc == mx || mr == N-1-mx || mc == N-1-mx {
-		for _, plane := range PLANES {
-			if checkCrossCells(pyer.id, &(gs.board), plane, mr, mc, mx, N) {
-				return true
-			}
-		}
+	for _, plane := range PLANES {
+		checkCrossCells(pyer.id, &(gs.board), plane, mr, mc, mx, N)
 	}
 
 	return false
@@ -127,6 +123,9 @@ func checkCrossCells(pyerId int, boardState *boardState, plane [2][2]int, r, c, 
 	if p1b == targetAcc {
 		return true
 	}
+	if p1a+p1b-1 == targetAcc {
+		return true
+	}
 
 	p2a := dfs(pyerId, boardState, dir1, r+dir1[0], c+dir1[1], x-1, -1, 1)
 	if p2a == targetAcc {
@@ -136,8 +135,19 @@ func checkCrossCells(pyerId int, boardState *boardState, plane [2][2]int, r, c, 
 	if p2b == targetAcc {
 		return true
 	}
+	if p2a+p2b-1 == targetAcc {
+		return true
+	}
 
-	if p1a+p1b-1 == targetAcc || p2a+p2b-1 == targetAcc {
+	p3a := dfs(pyerId, boardState, dir1, r+dir1[0], c+dir1[1], x, 0, 1)
+	if p3a == targetAcc {
+		return true
+	}
+	p3b := dfs(pyerId, boardState, dir2, r+dir2[0], c+dir2[1], x, 0, 1)
+	if p3b == targetAcc {
+		return true
+	}
+	if p3a+p3b-1 == targetAcc {
 		return true
 	}
 
