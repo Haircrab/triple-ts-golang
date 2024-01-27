@@ -1,71 +1,59 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 
+	"triple-ts-golang/game"
+
 	"github.com/gin-gonic/gin"
-	"github.com/gorilla/websocket"
+	socketio "github.com/googollee/go-socket.io"
 )
 
-func main() {
-	defer fmt.Println("Stopping server")
+func GinMiddleware(allowOrigin string) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", allowOrigin)
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT, DELETE")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Accept, Authorization, Content-Type, Content-Length, X-CSRF-Token, Token, session, Origin, Host, Connection, Accept-Encoding, Accept-Language, X-Requested-With")
 
-	ginRouter := gin.Default()
-	ginRouter.Use(gin.Recovery())
-	err := ginRouter.SetTrustedProxies(nil)
-	if err != nil {
-		panic(err)
-	}
+		if c.Request.Method == http.MethodOptions {
+			c.AbortWithStatus(http.StatusNoContent)
+			return
+		}
 
-	socketRoute := ginRouter.Group("/socket")
-	socketRoute.GET("", SocketHandler)
+		c.Request.Header.Del("Origin")
 
-	if err := ginRouter.Run(":8080"); err != nil {
-		panic(err)
+		c.Next()
 	}
 }
 
-func SocketHandler(c *gin.Context) {
-	upGrader := &websocket.Upgrader{
-		CheckOrigin: func(r *http.Request) bool {
-			return true
-		},
-		ReadBufferSize:  1024,
-		WriteBufferSize: 1024,
-	}
+func main() {
+	router := gin.New()
 
-	ws, err := upGrader.Upgrade(c.Writer, c.Request, nil)
-	if err != nil {
-		panic(err)
-	}
+	server := socketio.NewServer(nil)
+	defer server.Close()
 
-	// Close socket impl
-	defer func() {
-		closeSocketErr := ws.Close()
-		if closeSocketErr != nil {
-			panic(err)
+	InitSocketNS(server)
+	game.InitGameSocketNS(server)
+
+	go func() {
+		if err := server.Serve(); err != nil {
+			log.Fatalf("socketio listen error: %s\n", err)
 		}
 	}()
 
-	// Socket message receiving
-	for {
-		// receiving
-		msgType, msg, err := ws.ReadMessage()
-		if err != nil {
-			panic(err)
-		}
-		fmt.Printf("Message Type: %d, Message: %s\n", msgType, string(msg))
+	router.Use(GinMiddleware("http://localhost:3000"))
+	router.GET("/socket.io/*any", gin.WrapH(server))
+	router.POST("/socket.io/*any", gin.WrapH(server))
 
-		// sending
-		err = ws.WriteJSON(struct {
-			Reply string `json:"reply"`
-		}{
-			Reply: "Echo...",
+	router.GET("/hello", func(ctx *gin.Context) {
+		ctx.JSON(http.StatusOK, gin.H{
+			"message": "welcome to Otrio",
 		})
+	})
 
-		if err != nil {
-			panic(err)
-		}
+	if err := router.Run("localhost:8080"); err != nil {
+		log.Fatal("failed run app: ", err)
 	}
 }
