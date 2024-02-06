@@ -14,7 +14,7 @@ const (
 )
 
 func InitSocketNS(server *socketio.Server) {
-	server.OnConnect("/", func(conn socketio.Conn) error {
+	server.OnConnect(ns, func(conn socketio.Conn) error {
 		log.Printf("%v onConnected, sid: %v \n", r, conn.ID())
 		return nil
 	})

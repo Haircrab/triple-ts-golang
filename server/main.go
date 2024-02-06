@@ -29,31 +29,25 @@ func GinMiddleware(allowOrigin string) gin.HandlerFunc {
 }
 
 func main() {
-	router := gin.New()
+	r := gin.New()
 
-	server := socketio.NewServer(nil)
-	defer server.Close()
+	ser := socketio.NewServer(nil)
+	defer ser.Close()
 
-	InitSocketNS(server)
-	game.InitGameSocketNS(server)
+	InitSocketNS(ser)
+	game.InitGameSocketNS(ser)
 
 	go func() {
-		if err := server.Serve(); err != nil {
+		if err := ser.Serve(); err != nil {
 			log.Fatalf("socketio listen error: %s\n", err)
 		}
 	}()
 
-	router.Use(GinMiddleware("http://localhost:3000"))
-	router.GET("/socket.io/*any", gin.WrapH(server))
-	router.POST("/socket.io/*any", gin.WrapH(server))
+	r.Use(GinMiddleware("http://localhost:3000"))
+	r.GET("/socket.io/*any", gin.WrapH(ser))
+	r.POST("/socket.io/*any", gin.WrapH(ser))
 
-	router.GET("/hello", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{
-			"message": "welcome to Otrio",
-		})
-	})
-
-	if err := router.Run("localhost:8080"); err != nil {
+	if err := r.Run("localhost:8080"); err != nil {
 		log.Fatal("failed run app: ", err)
 	}
 }

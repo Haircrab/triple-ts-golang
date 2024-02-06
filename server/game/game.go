@@ -2,7 +2,6 @@ package game
 
 import (
 	"errors"
-	"fmt"
 )
 
 const (
@@ -20,11 +19,11 @@ var (
 )
 
 type gameState struct {
-	board            boardState
-	playerSeq        [4]int
-	nextPlayerSeqIdx int
+	Board            boardState `json:"board"`
+	PlayerSeq        [4]int     `json:"playerSeq"`
+	NextPlayerSeqIdx int        `json:"nextPlayerSeqIdx"`
 
-	winnerIdx int
+	WinnerIdx int `json:"winnerIdx"`
 }
 type (
 	boardState     [ROWS][COLS]boardCellState
@@ -32,18 +31,16 @@ type (
 )
 
 func InitGameState() *gameState {
-	res := &gameState{
-		playerSeq:        [4]int{p1, p2, p3, p4},
-		nextPlayerSeqIdx: 0,
-		winnerIdx:        -1,
+	return &gameState{
+		PlayerSeq:        [4]int{p1, p2, p3, p4},
+		NextPlayerSeqIdx: 0,
+		WinnerIdx:        -1,
 	}
-	fmt.Println(res)
-	return res
 }
 
 // win if true
 func (gs *gameState) MakeMove(pyer player, mv move) (bool, error) {
-	if gs.winnerIdx != -1 {
+	if gs.WinnerIdx != -1 {
 		return false, errors.New("Invalid move: the game is over")
 	}
 	if err := checkMove(mv); err != nil {
@@ -59,17 +56,17 @@ func (gs *gameState) MakeMove(pyer player, mv move) (bool, error) {
 		return false, errors.New("Invalid move: no remaining selected circle")
 	}
 	// 3. if cell is occupied
-	if gs.board[mv.r][mv.c][mv.x] != 0 {
+	if gs.Board[mv.r][mv.c][mv.x] != 0 {
 		return false, errors.New("Invalid move: cell is occupied")
 	}
 
 	// mutate board
-	gs.mutCell(mv.r, mv.c, mv.x, pyer.id)
+	gs.mutCell(mv.r, mv.c, mv.x, pyer.Id)
 	gs.mutNextPlayer()
 
 	// check winning condition
 	if gs.checkWin(pyer, mv) {
-		gs.winnerIdx = pyer.id
+		gs.WinnerIdx = pyer.Id
 
 		return true, nil
 	}
@@ -81,7 +78,7 @@ func (gs *gameState) MakeMove(pyer player, mv move) (bool, error) {
 // tranverse board and check winning conditions
 func (gs *gameState) checkWin(pyer player, mv move) bool {
 	// board states
-	currCell := gs.board[mv.r][mv.c]
+	currCell := gs.Board[mv.r][mv.c]
 
 	// check if player occupied all slots in same cell
 	if checkSameCell(pyer, currCell) {
@@ -91,7 +88,7 @@ func (gs *gameState) checkWin(pyer player, mv move) bool {
 	// check all direction
 	// TODO: seperate checking condition in parallel
 	for _, plane := range PLANES {
-		if checkCrossCells(pyer.id, &(gs.board), plane, mv.r, mv.c, mv.x, N) {
+		if checkCrossCells(pyer.Id, &(gs.Board), plane, mv.r, mv.c, mv.x, N) {
 			return true
 		}
 	}
@@ -101,7 +98,7 @@ func (gs *gameState) checkWin(pyer player, mv move) bool {
 
 func checkSameCell(pyer player, cell boardCellState) bool {
 	for _, v := range cell {
-		if v != pyer.id {
+		if v != pyer.Id {
 			return false
 		}
 	}

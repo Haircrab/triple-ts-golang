@@ -1,82 +1,76 @@
 "use client";
 
 import React, { FC, useEffect, useState } from "react";
-import socketFactory from "./socket";
+import { socketClient as socketFactory, c2s, s2c } from "./socket";
 import { useRouter, useSearchParams } from "next/navigation";
-import { roomIDKey } from "../utils/const";
+import { roomIdKey } from "../utils/const";
+import { S2CCreateRoomOkRes, S2CJoinRoomOkRes, S2cToggleReadyRes } from "./types";
 
 type GamePageProps = {};
 
 const GamePage: FC<GamePageProps> = () => {
-	const router = useRouter();
-	const searchParams = useSearchParams();
-	const roomId = searchParams.get(roomIDKey);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const roomId = searchParams.get(roomIdKey);
+  const [readyState, setReadyState] = useState<boolean[]>([false, false, false, false]);
+  const [rid, setrid] = useState("");
+  const [pid, setpid] = useState("");
+  const [isGameStarted, setIsGameStarted] = useState(false);
 
-	// State to store the messages
-	const [messages, setMessages] = useState<string[]>([]);
-	const [rid, setrid] = useState("");
-	// State to store the current message
-	const [currentMessage, setCurrentMessage] = useState("");
+  const [socket, setSocket] = useState<any>();
 
-	const [socket, setSocket] = useState<any>();
+  const toggleIsReady = () => {
+    socket.emit(c2s.toggleReadyEvent);
+  };
 
-	const sendMessage = () => {
-		// Send the message to the server
-		socket.emit("msg", currentMessage);
-		// Clear the currentMessage state
-		setCurrentMessage("");
-	};
+  useEffect(() => {
+    // Create a socket connection
+    const s = socketFactory(roomId ?? undefined);
+    setSocket(s);
 
-	useEffect(() => {
-		// Create a socket connection
-		const s = socketFactory(roomId ?? undefined);
-		setSocket(s);
+    // Listen for incoming messages
+    s.on(s2c.createRoomOkEvent, (res: S2CCreateRoomOkRes) => {
+      setrid(res.roomId);
+      setpid(res.playerId);
+    });
+    s.on(s2c.joinRoomOkEvent, (res: S2CJoinRoomOkRes) => {
+      setrid(res.roomId);
+      setpid(res.playerId);
+      setReadyState(res.readyState)
+    });
+    s.on(s2c.playerToggleReadyEvent, (res: S2cToggleReadyRes) => {
+      setReadyState((prev) => [...prev.slice(0, res.playerId), res.isReady, ...prev.slice(res.playerId + 1)])
+      setIsGameStarted(res.isGameStarted)
+    })
 
-		// Listen for incoming messages
-		s.on("msg", (message: any) => {
-			console.log("msg received", message);
+    // boilerplate socket events
+    s.on(s2c.connectedEvent, () => {
+      console.log("Connected");
+    });
+    s.on(s2c.disconnectedEvent, () => {
+      console.log("Disconnected");
+      router.push("/lobby");
+    });
+    s.on(s2c.errorEvent, async (err: any) => {
+      console.log(`error due to ${err.message}`);
+    });
 
-			setMessages((prevMessages) => [...prevMessages, message]);
-		});
-		s.on("roomID", (message: any) => {
-			setrid(message);
-		});
-		s.on("connect", () => {
-			console.log("Connected");
-		});
+    // Clean up the socket connection on unmount
+    return () => {
+      s.disconnect();
+    };
+  }, [roomId, router])
 
-		s.on("disconnect", () => {
-			console.log("Disconnected");
-			router.push("/lobby");
-		});
+  return (
+    <div>
+      <button onClick={toggleIsReady}>toggleIsReady</button>
 
-		s.on("error", async (err: any) => {
-			console.log(`error due to ${err.message}`);
-		});
-
-		// Clean up the socket connection on unmount
-		return () => {
-			s.disconnect();
-		};
-	}, [roomId, router]);
-
-	return (
-		<div>
-			{messages.map((message, index) => (
-				<p key={index}>{message}</p>
-			))}
-
-			<input
-				type="text"
-				value={currentMessage}
-				onChange={(e) => setCurrentMessage(e.target.value)}
-			/>
-
-			<button onClick={sendMessage}>Send</button>
-
-			<div>rid: {rid}</div>
-		</div>
-	);
+      <div>rid: {rid}</div>
+      <div>pid: {pid}</div>
+      <div>{JSON.stringify(readyState)}</div>
+      <div>isGameStarted: {JSON.stringify(isGameStarted)}</div>
+    </div>
+  );
 };
 
 export default GamePage;

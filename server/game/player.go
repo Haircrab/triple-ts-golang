@@ -3,19 +3,19 @@ package game
 import "errors"
 
 type player struct {
-	id int
-
-	circles [CIRCLES]int // available circles, i0 == small, i1 == medium, i2 == large, value == remaining
+	Id      int          `json:"id"`
+	Circles [CIRCLES]int `json:"circles"` // available circles, i0 == small, i1 == medium, i2 == large, value == remaining
+	IsReady bool         `json:"isReady"`
 }
 
 // player index
 const (
 	MAX_PLAYER = 4
-	p_none     = 0
-	p1         = 1
-	p2         = 2
-	p3         = 3
-	p4         = 4
+	p_none     = -1
+	p1         = 0
+	p2         = 1
+	p3         = 2
+	p4         = 3
 )
 
 func InitPlayer(id int) (*player, error) {
@@ -24,12 +24,12 @@ func InitPlayer(id int) (*player, error) {
 	}
 
 	res := &player{
-		id:      id,
-		circles: [3]int{3, 3, 3},
+		Id:      id,
+		Circles: [3]int{3, 3, 3},
 	}
 	return res, nil
 }
 
 func (p *player) canCircleUsed(c int) bool {
-	return !(p.circles[c] <= 0)
+	return !(p.Circles[c] <= 0)
 }

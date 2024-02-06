@@ -9,14 +9,14 @@ import (
 func TestInitGameState(t *testing.T) {
 	gs := InitGameState()
 
-	if len(&gs.board) != 3 {
-		t.Errorf("len of board ROWS is not equal to 3: %v", len(&gs.board))
+	if len(&gs.Board) != 3 {
+		t.Errorf("len of board ROWS is not equal to 3: %v", len(&gs.Board))
 	}
-	if len(&gs.board[0]) != 3 {
-		t.Errorf("len of board ROWS is not equal to 3: %v", len(&gs.board[0]))
+	if len(&gs.Board[0]) != 3 {
+		t.Errorf("len of board ROWS is not equal to 3: %v", len(&gs.Board[0]))
 	}
-	if len(&gs.board[0][0]) != 3 {
-		t.Errorf("len of board cell is not equal to 3: %v", len(&gs.board[0][0]))
+	if len(&gs.Board[0][0]) != 3 {
+		t.Errorf("len of board cell is not equal to 3: %v", len(&gs.Board[0][0]))
 	}
 }
 
@@ -25,19 +25,19 @@ func TestCheckWinSameCell(t *testing.T) {
 	gs := InitGameState()
 	t.Log("gs: ", gs)
 
-	p1, err := InitPlayer(1)
+	p1, err := InitPlayer(0)
 	if err != nil {
 		t.Error("test fail in InitPlayer 1")
 	}
-	p2, err := InitPlayer(2)
+	p2, err := InitPlayer(1)
 	if err != nil {
 		t.Error("test fail in InitPlayer 2")
 	}
-	p3, err := InitPlayer(3)
+	p3, err := InitPlayer(2)
 	if err != nil {
 		t.Error("test fail in InitPlayer 3")
 	}
-	p4, err := InitPlayer(4)
+	p4, err := InitPlayer(3)
 	if err != nil {
 		t.Error("test fail in InitPlayer 4")
 	}
@@ -73,7 +73,7 @@ func TestCheckWinSameCell(t *testing.T) {
 	mv, _ = InitMove(0, 0, 2)
 	res, _ = gs.MakeMove(*p1, *mv)
 	t.Log(res)
-	t.Log(gs.winnerIdx)
+	t.Log(gs.WinnerIdx)
 
 	mv, _ = InitMove(1, 0, 2)
 	res, err = gs.MakeMove(*p2, *mv)
@@ -88,19 +88,19 @@ func TestCheckWinCrossCellStartNEG_D(t *testing.T) {
 	gs := InitGameState()
 	t.Log("gs: ", gs)
 
-	p1, err := InitPlayer(1)
+	p1, err := InitPlayer(0)
 	if err != nil {
 		t.Error("test fail in InitPlayer 1")
 	}
-	p2, err := InitPlayer(2)
+	p2, err := InitPlayer(1)
 	if err != nil {
 		t.Error("test fail in InitPlayer 2")
 	}
-	p3, err := InitPlayer(3)
+	p3, err := InitPlayer(2)
 	if err != nil {
 		t.Error("test fail in InitPlayer 3")
 	}
-	p4, err := InitPlayer(4)
+	p4, err := InitPlayer(3)
 	if err != nil {
 		t.Error("test fail in InitPlayer 4")
 	}
@@ -155,19 +155,19 @@ func TestCheckWinCrossCellMidNEG_D(t *testing.T) {
 	gs := InitGameState()
 	t.Log("gs: ", gs)
 
-	p1, err := InitPlayer(1)
+	p1, err := InitPlayer(0)
 	if err != nil {
 		t.Error("test fail in InitPlayer 1")
 	}
-	p2, err := InitPlayer(2)
+	p2, err := InitPlayer(1)
 	if err != nil {
 		t.Error("test fail in InitPlayer 2")
 	}
-	p3, err := InitPlayer(3)
+	p3, err := InitPlayer(2)
 	if err != nil {
 		t.Error("test fail in InitPlayer 3")
 	}
-	p4, err := InitPlayer(4)
+	p4, err := InitPlayer(3)
 	if err != nil {
 		t.Error("test fail in InitPlayer 4")
 	}
@@ -227,19 +227,19 @@ func TestCheckWinCrossCellEndNEG_D(t *testing.T) {
 	gs := InitGameState()
 	t.Log("gs: ", gs)
 
-	p1, err := InitPlayer(1)
+	p1, err := InitPlayer(0)
 	if err != nil {
 		t.Error("test fail in InitPlayer 1")
 	}
-	p2, err := InitPlayer(2)
+	p2, err := InitPlayer(1)
 	if err != nil {
 		t.Error("test fail in InitPlayer 2")
 	}
-	p3, err := InitPlayer(3)
+	p3, err := InitPlayer(2)
 	if err != nil {
 		t.Error("test fail in InitPlayer 3")
 	}
-	p4, err := InitPlayer(4)
+	p4, err := InitPlayer(3)
 	if err != nil {
 		t.Error("test fail in InitPlayer 4")
 	}
@@ -300,19 +300,19 @@ func TestCheckWinCrossCellStartPOS_D(t *testing.T) {
 	gs := InitGameState()
 	t.Log("gs: ", gs)
 
-	p1, err := InitPlayer(1)
+	p1, err := InitPlayer(0)
 	if err != nil {
 		t.Error("test fail in InitPlayer 1")
 	}
-	p2, err := InitPlayer(2)
+	p2, err := InitPlayer(1)
 	if err != nil {
 		t.Error("test fail in InitPlayer 2")
 	}
-	p3, err := InitPlayer(3)
+	p3, err := InitPlayer(2)
 	if err != nil {
 		t.Error("test fail in InitPlayer 3")
 	}
-	p4, err := InitPlayer(4)
+	p4, err := InitPlayer(3)
 	if err != nil {
 		t.Error("test fail in InitPlayer 4")
 	}
@@ -367,19 +367,19 @@ func TestCheckWinCrossCellMidPOS_D(t *testing.T) {
 	gs := InitGameState()
 	t.Log("gs: ", gs)
 
-	p1, err := InitPlayer(1)
+	p1, err := InitPlayer(0)
 	if err != nil {
 		t.Error("test fail in InitPlayer 1")
 	}
-	p2, err := InitPlayer(2)
+	p2, err := InitPlayer(1)
 	if err != nil {
 		t.Error("test fail in InitPlayer 2")
 	}
-	p3, err := InitPlayer(3)
+	p3, err := InitPlayer(2)
 	if err != nil {
 		t.Error("test fail in InitPlayer 3")
 	}
-	p4, err := InitPlayer(4)
+	p4, err := InitPlayer(3)
 	if err != nil {
 		t.Error("test fail in InitPlayer 4")
 	}
@@ -439,19 +439,19 @@ func TestCheckWinCrossCellEndPOS_D(t *testing.T) {
 	gs := InitGameState()
 	t.Log("gs: ", gs)
 
-	p1, err := InitPlayer(1)
+	p1, err := InitPlayer(0)
 	if err != nil {
 		t.Error("test fail in InitPlayer 1")
 	}
-	p2, err := InitPlayer(2)
+	p2, err := InitPlayer(1)
 	if err != nil {
 		t.Error("test fail in InitPlayer 2")
 	}
-	p3, err := InitPlayer(3)
+	p3, err := InitPlayer(2)
 	if err != nil {
 		t.Error("test fail in InitPlayer 3")
 	}
-	p4, err := InitPlayer(4)
+	p4, err := InitPlayer(3)
 	if err != nil {
 		t.Error("test fail in InitPlayer 4")
 	}
@@ -512,19 +512,19 @@ func TestCheckWinCrossCellStartHOR(t *testing.T) {
 	gs := InitGameState()
 	t.Log("gs: ", gs)
 
-	p1, err := InitPlayer(1)
+	p1, err := InitPlayer(0)
 	if err != nil {
 		t.Error("test fail in InitPlayer 1")
 	}
-	p2, err := InitPlayer(2)
+	p2, err := InitPlayer(1)
 	if err != nil {
 		t.Error("test fail in InitPlayer 2")
 	}
-	p3, err := InitPlayer(3)
+	p3, err := InitPlayer(2)
 	if err != nil {
 		t.Error("test fail in InitPlayer 3")
 	}
-	p4, err := InitPlayer(4)
+	p4, err := InitPlayer(3)
 	if err != nil {
 		t.Error("test fail in InitPlayer 4")
 	}
@@ -571,19 +571,19 @@ func TestCheckWinCrossCellMidHOR(t *testing.T) {
 	gs := InitGameState()
 	t.Log("gs: ", gs)
 
-	p1, err := InitPlayer(1)
+	p1, err := InitPlayer(0)
 	if err != nil {
 		t.Error("test fail in InitPlayer 1")
 	}
-	p2, err := InitPlayer(2)
+	p2, err := InitPlayer(1)
 	if err != nil {
 		t.Error("test fail in InitPlayer 2")
 	}
-	p3, err := InitPlayer(3)
+	p3, err := InitPlayer(2)
 	if err != nil {
 		t.Error("test fail in InitPlayer 3")
 	}
-	p4, err := InitPlayer(4)
+	p4, err := InitPlayer(3)
 	if err != nil {
 		t.Error("test fail in InitPlayer 4")
 	}
@@ -630,19 +630,19 @@ func TestCheckWinCrossCellEndHOR(t *testing.T) {
 	gs := InitGameState()
 	t.Log("gs: ", gs)
 
-	p1, err := InitPlayer(1)
+	p1, err := InitPlayer(0)
 	if err != nil {
 		t.Error("test fail in InitPlayer 1")
 	}
-	p2, err := InitPlayer(2)
+	p2, err := InitPlayer(1)
 	if err != nil {
 		t.Error("test fail in InitPlayer 2")
 	}
-	p3, err := InitPlayer(3)
+	p3, err := InitPlayer(2)
 	if err != nil {
 		t.Error("test fail in InitPlayer 3")
 	}
-	p4, err := InitPlayer(4)
+	p4, err := InitPlayer(3)
 	if err != nil {
 		t.Error("test fail in InitPlayer 4")
 	}
@@ -703,19 +703,19 @@ func TestCheckWinCrossCellEndVER(t *testing.T) {
 	gs := InitGameState()
 	t.Log("gs: ", gs)
 
-	p1, err := InitPlayer(1)
+	p1, err := InitPlayer(0)
 	if err != nil {
 		t.Error("test fail in InitPlayer 1")
 	}
-	p2, err := InitPlayer(2)
+	p2, err := InitPlayer(1)
 	if err != nil {
 		t.Error("test fail in InitPlayer 2")
 	}
-	p3, err := InitPlayer(3)
+	p3, err := InitPlayer(2)
 	if err != nil {
 		t.Error("test fail in InitPlayer 3")
 	}
-	p4, err := InitPlayer(4)
+	p4, err := InitPlayer(3)
 	if err != nil {
 		t.Error("test fail in InitPlayer 4")
 	}
@@ -776,19 +776,19 @@ func TestCheckWinCrossCellStartNEG_D2(t *testing.T) {
 	gs := InitGameState()
 	t.Log("gs: ", gs)
 
-	p1, err := InitPlayer(1)
+	p1, err := InitPlayer(0)
 	if err != nil {
 		t.Error("test fail in InitPlayer 1")
 	}
-	p2, err := InitPlayer(2)
+	p2, err := InitPlayer(1)
 	if err != nil {
 		t.Error("test fail in InitPlayer 2")
 	}
-	p3, err := InitPlayer(3)
+	p3, err := InitPlayer(2)
 	if err != nil {
 		t.Error("test fail in InitPlayer 3")
 	}
-	p4, err := InitPlayer(4)
+	p4, err := InitPlayer(3)
 	if err != nil {
 		t.Error("test fail in InitPlayer 4")
 	}
@@ -835,19 +835,19 @@ func TestCheckWinCrossCellMidNEG_D2(t *testing.T) {
 	gs := InitGameState()
 	t.Log("gs: ", gs)
 
-	p1, err := InitPlayer(1)
+	p1, err := InitPlayer(0)
 	if err != nil {
 		t.Error("test fail in InitPlayer 1")
 	}
-	p2, err := InitPlayer(2)
+	p2, err := InitPlayer(1)
 	if err != nil {
 		t.Error("test fail in InitPlayer 2")
 	}
-	p3, err := InitPlayer(3)
+	p3, err := InitPlayer(2)
 	if err != nil {
 		t.Error("test fail in InitPlayer 3")
 	}
-	p4, err := InitPlayer(4)
+	p4, err := InitPlayer(3)
 	if err != nil {
 		t.Error("test fail in InitPlayer 4")
 	}
@@ -903,19 +903,19 @@ func TestCheckWinCrossCellEndNEG_D2(t *testing.T) {
 	gs := InitGameState()
 	t.Log("gs: ", gs)
 
-	p1, err := InitPlayer(1)
+	p1, err := InitPlayer(0)
 	if err != nil {
 		t.Error("test fail in InitPlayer 1")
 	}
-	p2, err := InitPlayer(2)
+	p2, err := InitPlayer(1)
 	if err != nil {
 		t.Error("test fail in InitPlayer 2")
 	}
-	p3, err := InitPlayer(3)
+	p3, err := InitPlayer(2)
 	if err != nil {
 		t.Error("test fail in InitPlayer 3")
 	}
-	p4, err := InitPlayer(4)
+	p4, err := InitPlayer(3)
 	if err != nil {
 		t.Error("test fail in InitPlayer 4")
 	}
@@ -976,19 +976,19 @@ func TestCheckWinCrossCellStartPOS_D2(t *testing.T) {
 	gs := InitGameState()
 	t.Log("gs: ", gs)
 
-	p1, err := InitPlayer(1)
+	p1, err := InitPlayer(0)
 	if err != nil {
 		t.Error("test fail in InitPlayer 1")
 	}
-	p2, err := InitPlayer(2)
+	p2, err := InitPlayer(1)
 	if err != nil {
 		t.Error("test fail in InitPlayer 2")
 	}
-	p3, err := InitPlayer(3)
+	p3, err := InitPlayer(2)
 	if err != nil {
 		t.Error("test fail in InitPlayer 3")
 	}
-	p4, err := InitPlayer(4)
+	p4, err := InitPlayer(3)
 	if err != nil {
 		t.Error("test fail in InitPlayer 4")
 	}
@@ -1043,19 +1043,19 @@ func TestCheckWinCrossCellMidPOS_D2(t *testing.T) {
 	gs := InitGameState()
 	t.Log("gs: ", gs)
 
-	p1, err := InitPlayer(1)
+	p1, err := InitPlayer(0)
 	if err != nil {
 		t.Error("test fail in InitPlayer 1")
 	}
-	p2, err := InitPlayer(2)
+	p2, err := InitPlayer(1)
 	if err != nil {
 		t.Error("test fail in InitPlayer 2")
 	}
-	p3, err := InitPlayer(3)
+	p3, err := InitPlayer(2)
 	if err != nil {
 		t.Error("test fail in InitPlayer 3")
 	}
-	p4, err := InitPlayer(4)
+	p4, err := InitPlayer(3)
 	if err != nil {
 		t.Error("test fail in InitPlayer 4")
 	}
@@ -1116,19 +1116,19 @@ func TestCheckWinCrossCellStartHOR2(t *testing.T) {
 	gs := InitGameState()
 	t.Log("gs: ", gs)
 
-	p1, err := InitPlayer(1)
+	p1, err := InitPlayer(0)
 	if err != nil {
 		t.Error("test fail in InitPlayer 1")
 	}
-	p2, err := InitPlayer(2)
+	p2, err := InitPlayer(1)
 	if err != nil {
 		t.Error("test fail in InitPlayer 2")
 	}
-	p3, err := InitPlayer(3)
+	p3, err := InitPlayer(2)
 	if err != nil {
 		t.Error("test fail in InitPlayer 3")
 	}
-	p4, err := InitPlayer(4)
+	p4, err := InitPlayer(3)
 	if err != nil {
 		t.Error("test fail in InitPlayer 4")
 	}
@@ -1175,19 +1175,19 @@ func TestCheckWinCrossCellMidHOR2(t *testing.T) {
 	gs := InitGameState()
 	t.Log("gs: ", gs)
 
-	p1, err := InitPlayer(1)
+	p1, err := InitPlayer(0)
 	if err != nil {
 		t.Error("test fail in InitPlayer 1")
 	}
-	p2, err := InitPlayer(2)
+	p2, err := InitPlayer(1)
 	if err != nil {
 		t.Error("test fail in InitPlayer 2")
 	}
-	p3, err := InitPlayer(3)
+	p3, err := InitPlayer(2)
 	if err != nil {
 		t.Error("test fail in InitPlayer 3")
 	}
-	p4, err := InitPlayer(4)
+	p4, err := InitPlayer(3)
 	if err != nil {
 		t.Error("test fail in InitPlayer 4")
 	}
@@ -1234,19 +1234,19 @@ func TestCheckWinCrossCellEndHOR2(t *testing.T) {
 	gs := InitGameState()
 	t.Log("gs: ", gs)
 
-	p1, err := InitPlayer(1)
+	p1, err := InitPlayer(0)
 	if err != nil {
 		t.Error("test fail in InitPlayer 1")
 	}
-	p2, err := InitPlayer(2)
+	p2, err := InitPlayer(1)
 	if err != nil {
 		t.Error("test fail in InitPlayer 2")
 	}
-	p3, err := InitPlayer(3)
+	p3, err := InitPlayer(2)
 	if err != nil {
 		t.Error("test fail in InitPlayer 3")
 	}
-	p4, err := InitPlayer(4)
+	p4, err := InitPlayer(3)
 	if err != nil {
 		t.Error("test fail in InitPlayer 4")
 	}

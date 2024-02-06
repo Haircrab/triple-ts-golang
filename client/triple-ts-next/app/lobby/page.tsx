@@ -2,7 +2,7 @@
 
 import React, { FC, useState } from "react";
 import { useRouter } from "next/navigation";
-import { roomIDKey } from "../utils/const";
+import { roomIdKey } from "../utils/const";
 
 type LobbyPageProps = { children?: React.ReactNode };
 
@@ -23,7 +23,7 @@ const LobbyPage: FC<LobbyPageProps> = () => {
 					></input>
 				</div>
 
-				<button disabled={!roomId} onClick={() => router.push(`/game?${roomIDKey}=${roomId}`)}>
+				<button disabled={!roomId} onClick={() => router.push(`/game?${roomIdKey}=${roomId}`)}>
 					Join Room
 				</button>
 			</div>

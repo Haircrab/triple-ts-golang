@@ -25,7 +25,7 @@ func InitMove(r, c, x int) (*move, error) {
 }
 
 func (gs *gameState) checkIsPlayerTurn(pyer player) bool {
-	return gs.playerSeq[gs.nextPlayerSeqIdx] == pyer.id
+	return gs.PlayerSeq[gs.NextPlayerSeqIdx] == pyer.Id
 }
 
 func checkMove(mv move) error {
@@ -36,10 +36,10 @@ func checkMove(mv move) error {
 }
 
 func (gs *gameState) mutNextPlayer() {
-	if gs.nextPlayerSeqIdx == MAX_PLAYER-1 {
-		gs.nextPlayerSeqIdx = 0
+	if gs.NextPlayerSeqIdx == MAX_PLAYER-1 {
+		gs.NextPlayerSeqIdx = 0
 	} else {
-		gs.nextPlayerSeqIdx++
+		gs.NextPlayerSeqIdx++
 	}
 }
 
@@ -48,7 +48,7 @@ func (gs *gameState) mutCell(r, c, x, pyerIdx int) error {
 		return errors.New("circle value must be 0 to 2")
 	}
 
-	board := &(gs.board)
+	board := &(gs.Board)
 
 	fmt.Printf("player %v making move in %v %v %v \n", pyerIdx, r, c, x)
 	board[r][c][x] = pyerIdx
