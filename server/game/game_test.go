@@ -1,9 +1,9 @@
 package game
 
 import (
-	"testing"
-
 	"github.com/stretchr/testify/assert"
+
+	"testing"
 )
 
 func TestInitGameState(t *testing.T) {

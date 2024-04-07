@@ -18,7 +18,7 @@ var (
 	PLANES = [4][2][2]int{HOR, VER, NEG_D, POS_D}
 )
 
-type gameState struct {
+type GameState struct {
 	Board            boardState `json:"board"`
 	PlayerSeq        [4]int     `json:"playerSeq"`
 	NextPlayerSeqIdx int        `json:"nextPlayerSeqIdx"`
@@ -30,16 +30,16 @@ type (
 	boardCellState [CIRCLES]int // 0-5, 0 == unoccupied, 1-4 == player id
 )
 
-func InitGameState() *gameState {
-	return &gameState{
-		PlayerSeq:        [4]int{p1, p2, p3, p4},
+func InitGameState() *GameState {
+	return &GameState{
+		PlayerSeq:        [4]int{P1, P2, P3, P4},
 		NextPlayerSeqIdx: 0,
 		WinnerIdx:        -1,
 	}
 }
 
 // win if true
-func (gs *gameState) MakeMove(pyer player, mv move) (bool, error) {
+func (gs *GameState) MakeMove(pyer Player, mv Move) (bool, error) {
 	if gs.WinnerIdx != -1 {
 		return false, errors.New("Invalid move: the game is over")
 	}
@@ -76,7 +76,7 @@ func (gs *gameState) MakeMove(pyer player, mv move) (bool, error) {
 
 // player's move should be already checked and made to the baord
 // tranverse board and check winning conditions
-func (gs *gameState) checkWin(pyer player, mv move) bool {
+func (gs *GameState) checkWin(pyer Player, mv Move) bool {
 	// board states
 	currCell := gs.Board[mv.r][mv.c]
 
@@ -96,7 +96,7 @@ func (gs *gameState) checkWin(pyer player, mv move) bool {
 	return false
 }
 
-func checkSameCell(pyer player, cell boardCellState) bool {
+func checkSameCell(pyer Player, cell boardCellState) bool {
 	for _, v := range cell {
 		if v != pyer.Id {
 			return false

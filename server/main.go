@@ -4,10 +4,10 @@ import (
 	"log"
 	"net/http"
 
-	"triple-ts-golang/game"
+	app_socket "triple-ts-golang/app_socket"
+	game_socket "triple-ts-golang/app_socket/game"
 
 	"github.com/gin-gonic/gin"
-	socketio "github.com/googollee/go-socket.io"
 )
 
 func GinMiddleware(allowOrigin string) gin.HandlerFunc {
@@ -31,11 +31,11 @@ func GinMiddleware(allowOrigin string) gin.HandlerFunc {
 func main() {
 	r := gin.New()
 
-	ser := socketio.NewServer(nil)
+	ser := app_socket.InitSocketioSer()
 	defer ser.Close()
 
-	InitSocketNS(ser)
-	game.InitGameSocketNS(ser)
+	app_socket.InitSocketNS(ser)
+	game_socket.InitGameSocketNS(ser)
 
 	go func() {
 		if err := ser.Serve(); err != nil {

@@ -34,11 +34,13 @@ const GamePage: FC<GamePageProps> = () => {
       setpid(res.playerId);
     });
     s.on(s2c.joinRoomOkEvent, (res: S2CJoinRoomOkRes) => {
+      console.log("isGameStarted", isGameStarted)
       setrid(res.roomId);
       setpid(res.playerId);
       setReadyState(res.readyState)
     });
     s.on(s2c.playerToggleReadyEvent, (res: S2cToggleReadyRes) => {
+      console.log("playerToggleReadyEvent", res)
       setReadyState((prev) => [...prev.slice(0, res.playerId), res.isReady, ...prev.slice(res.playerId + 1)])
       setIsGameStarted(res.isGameStarted)
     })
@@ -63,11 +65,10 @@ const GamePage: FC<GamePageProps> = () => {
 
   return (
     <div>
-      <button onClick={toggleIsReady}>toggleIsReady</button>
-
       <div>rid: {rid}</div>
       <div>pid: {pid}</div>
       <div>{JSON.stringify(readyState)}</div>
+      {!isGameStarted ? <button onClick={toggleIsReady}>toggleIsReady</button> : "no button"}
       <div>isGameStarted: {JSON.stringify(isGameStarted)}</div>
     </div>
   );
