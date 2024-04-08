@@ -43,40 +43,40 @@ func TestCheckWinSameCell(t *testing.T) {
 	}
 
 	mv, _ := InitMove(0, 0, 0)
-	res, _ := gs.MakeMove(*p1, *mv)
+	res, _ := gs.MakeMove(p1, *mv)
 
 	mv, _ = InitMove(1, 1, 1)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 
 	mv, _ = InitMove(2, 2, 2)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 
 	mv, _ = InitMove(2, 2, 1)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 	t.Log(gs)
 
 	//
 	mv, _ = InitMove(0, 0, 1)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 
 	mv, _ = InitMove(1, 1, 0)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 
 	mv, _ = InitMove(2, 2, 0)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 
 	mv, _ = InitMove(0, 1, 0)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 	t.Log(gs)
 
 	//
 	mv, _ = InitMove(0, 0, 2)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 	t.Log(res)
 	t.Log(gs.WinnerIdx)
 
 	mv, _ = InitMove(1, 0, 2)
-	res, err = gs.MakeMove(*p2, *mv)
+	res, err = gs.MakeMove(p2, *mv)
 	if err != nil {
 		t.Log(err)
 	}
@@ -106,46 +106,46 @@ func TestCheckWinCrossCellStartNEG_D(t *testing.T) {
 	}
 
 	mv, _ := InitMove(0, 0, 0)
-	res, _ := gs.MakeMove(*p1, *mv)
+	res, _ := gs.MakeMove(p1, *mv)
 	// t.Log(res)
 	// t.Log(gs)
 
 	mv, _ = InitMove(0, 0, 1)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 	// t.Log(gs)
 
 	mv, _ = InitMove(0, 0, 2)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 	// t.Log(gs)
 
 	mv, _ = InitMove(2, 2, 0)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 	t.Log(gs)
 
 	//
 	mv, _ = InitMove(1, 1, 1)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 	// t.Log(gs)
 
 	mv, _ = InitMove(1, 1, 0)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 	// t.Log(gs)
 
 	mv, _ = InitMove(2, 2, 1)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 	// t.Log(gs)
 
 	mv, _ = InitMove(2, 1, 2)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 
 	//
 	mv, _ = InitMove(2, 2, 2)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 	t.Log(res)
 	t.Log(gs)
 
 	mv, _ = InitMove(1, 0, 2)
-	res, err = gs.MakeMove(*p2, *mv)
+	res, err = gs.MakeMove(p2, *mv)
 	if err != nil {
 		t.Log(err)
 	}
@@ -174,42 +174,42 @@ func TestCheckWinCrossCellMidNEG_D(t *testing.T) {
 
 	// first round
 	mv, _ := InitMove(1, 1, 1)
-	res, _ := gs.MakeMove(*p1, *mv)
+	res, _ := gs.MakeMove(p1, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(0, 0, 1)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(0, 0, 2)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(2, 2, 0)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 	assert.Equal(t, false, res)
 	t.Log(gs)
 
 	// second round
 	mv, _ = InitMove(0, 0, 0)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(1, 1, 0)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(2, 2, 1)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(2, 1, 2)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 	assert.Equal(t, false, res)
 
 	// third round
 	mv, _ = InitMove(2, 2, 2)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 
 	assert.Equal(t, true, res)
 
@@ -217,7 +217,7 @@ func TestCheckWinCrossCellMidNEG_D(t *testing.T) {
 	t.Log(gs)
 
 	mv, _ = InitMove(1, 0, 2)
-	res, err = gs.MakeMove(*p2, *mv)
+	res, err = gs.MakeMove(p2, *mv)
 	if err != nil {
 		t.Log(err)
 	}
@@ -246,42 +246,42 @@ func TestCheckWinCrossCellEndNEG_D(t *testing.T) {
 
 	// first round
 	mv, _ := InitMove(2, 2, 2)
-	res, _ := gs.MakeMove(*p1, *mv)
+	res, _ := gs.MakeMove(p1, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(0, 0, 1)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(0, 0, 2)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(2, 2, 0)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 	assert.Equal(t, false, res)
 	t.Log(gs)
 
 	// second round
 	mv, _ = InitMove(0, 0, 0)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(1, 1, 0)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(2, 2, 1)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(2, 1, 2)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 	assert.Equal(t, false, res)
 
 	// third round
 	mv, _ = InitMove(1, 1, 1)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 
 	assert.Equal(t, true, res)
 
@@ -289,7 +289,7 @@ func TestCheckWinCrossCellEndNEG_D(t *testing.T) {
 	t.Log(gs)
 
 	mv, _ = InitMove(1, 0, 2)
-	res, err = gs.MakeMove(*p2, *mv)
+	res, err = gs.MakeMove(p2, *mv)
 	if err != nil {
 		t.Log(err)
 	}
@@ -318,46 +318,46 @@ func TestCheckWinCrossCellStartPOS_D(t *testing.T) {
 	}
 
 	mv, _ := InitMove(0, 2, 0)
-	res, _ := gs.MakeMove(*p1, *mv)
+	res, _ := gs.MakeMove(p1, *mv)
 	// t.Log(res)
 	// t.Log(gs)
 
 	mv, _ = InitMove(0, 0, 1)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 	// t.Log(gs)
 
 	mv, _ = InitMove(0, 0, 2)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 	// t.Log(gs)
 
 	mv, _ = InitMove(2, 2, 0)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 	t.Log(gs)
 
 	//
 	mv, _ = InitMove(1, 1, 1)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 	// t.Log(gs)
 
 	mv, _ = InitMove(1, 1, 0)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 	// t.Log(gs)
 
 	mv, _ = InitMove(2, 2, 1)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 	// t.Log(gs)
 
 	mv, _ = InitMove(2, 1, 2)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 
 	//
 	mv, _ = InitMove(2, 0, 2)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 	t.Log(res)
 	t.Log(gs)
 
 	mv, _ = InitMove(1, 0, 2)
-	res, err = gs.MakeMove(*p2, *mv)
+	res, err = gs.MakeMove(p2, *mv)
 	if err != nil {
 		t.Log(err)
 	}
@@ -386,42 +386,42 @@ func TestCheckWinCrossCellMidPOS_D(t *testing.T) {
 
 	// first round
 	mv, _ := InitMove(1, 1, 1)
-	res, _ := gs.MakeMove(*p1, *mv)
+	res, _ := gs.MakeMove(p1, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(0, 0, 1)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(0, 0, 2)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(2, 2, 0)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 	assert.Equal(t, false, res)
 	t.Log(gs)
 
 	// second round
 	mv, _ = InitMove(0, 2, 2)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(1, 1, 0)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(2, 2, 1)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(2, 1, 2)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 	assert.Equal(t, false, res)
 
 	// third round
 	mv, _ = InitMove(2, 0, 0)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 
 	assert.Equal(t, true, res)
 
@@ -429,7 +429,7 @@ func TestCheckWinCrossCellMidPOS_D(t *testing.T) {
 	t.Log(gs)
 
 	mv, _ = InitMove(1, 0, 2)
-	res, err = gs.MakeMove(*p2, *mv)
+	res, err = gs.MakeMove(p2, *mv)
 	if err != nil {
 		t.Log(err)
 	}
@@ -458,42 +458,42 @@ func TestCheckWinCrossCellEndPOS_D(t *testing.T) {
 
 	// first round
 	mv, _ := InitMove(2, 0, 0)
-	res, _ := gs.MakeMove(*p1, *mv)
+	res, _ := gs.MakeMove(p1, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(0, 0, 1)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(0, 0, 2)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(2, 2, 0)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 	assert.Equal(t, false, res)
 	t.Log(gs)
 
 	// second round
 	mv, _ = InitMove(0, 2, 2)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(1, 1, 0)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(2, 2, 1)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(2, 1, 2)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 	assert.Equal(t, false, res)
 
 	// third round
 	mv, _ = InitMove(1, 1, 1)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 
 	assert.Equal(t, true, res)
 
@@ -501,7 +501,7 @@ func TestCheckWinCrossCellEndPOS_D(t *testing.T) {
 	t.Log(gs)
 
 	mv, _ = InitMove(1, 0, 2)
-	res, err = gs.MakeMove(*p2, *mv)
+	res, err = gs.MakeMove(p2, *mv)
 	if err != nil {
 		t.Log(err)
 	}
@@ -530,38 +530,38 @@ func TestCheckWinCrossCellStartHOR(t *testing.T) {
 	}
 
 	mv, _ := InitMove(0, 0, 0)
-	res, _ := gs.MakeMove(*p1, *mv)
+	res, _ := gs.MakeMove(p1, *mv)
 
 	mv, _ = InitMove(0, 0, 1)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 
 	mv, _ = InitMove(0, 2, 1)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 
 	mv, _ = InitMove(2, 2, 0)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 
 	//
 	mv, _ = InitMove(0, 2, 2)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 
 	mv, _ = InitMove(1, 1, 0)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 
 	mv, _ = InitMove(2, 2, 1)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 
 	mv, _ = InitMove(2, 1, 2)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 
 	//
 	mv, _ = InitMove(0, 1, 1)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 	t.Log(res)
 	t.Log(gs)
 
 	mv, _ = InitMove(1, 0, 2)
-	res, err = gs.MakeMove(*p2, *mv)
+	res, err = gs.MakeMove(p2, *mv)
 	if err != nil {
 		t.Log(err)
 	}
@@ -589,38 +589,38 @@ func TestCheckWinCrossCellMidHOR(t *testing.T) {
 	}
 
 	mv, _ := InitMove(0, 1, 1)
-	res, _ := gs.MakeMove(*p1, *mv)
+	res, _ := gs.MakeMove(p1, *mv)
 
 	mv, _ = InitMove(0, 0, 1)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 
 	mv, _ = InitMove(0, 2, 2)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 
 	mv, _ = InitMove(2, 2, 0)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 
 	//
 	mv, _ = InitMove(0, 0, 2)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 
 	mv, _ = InitMove(1, 1, 0)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 
 	mv, _ = InitMove(2, 2, 1)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 
 	mv, _ = InitMove(2, 1, 2)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 
 	//
 	mv, _ = InitMove(0, 2, 0)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 	t.Log(res)
 	t.Log(gs)
 
 	mv, _ = InitMove(1, 0, 2)
-	res, err = gs.MakeMove(*p2, *mv)
+	res, err = gs.MakeMove(p2, *mv)
 	if err != nil {
 		t.Log(err)
 	}
@@ -649,42 +649,42 @@ func TestCheckWinCrossCellEndHOR(t *testing.T) {
 
 	// first round
 	mv, _ := InitMove(2, 2, 0)
-	res, _ := gs.MakeMove(*p1, *mv)
+	res, _ := gs.MakeMove(p1, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(0, 0, 1)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(0, 0, 2)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(1, 2, 0)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 	assert.Equal(t, false, res)
 	t.Log(gs)
 
 	// second round
 	mv, _ = InitMove(2, 0, 2)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(1, 1, 0)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(2, 2, 1)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(2, 1, 2)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 	assert.Equal(t, false, res)
 
 	// third round
 	mv, _ = InitMove(2, 1, 1)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 
 	assert.Equal(t, true, res)
 
@@ -692,7 +692,7 @@ func TestCheckWinCrossCellEndHOR(t *testing.T) {
 	t.Log(gs)
 
 	mv, _ = InitMove(1, 0, 2)
-	res, err = gs.MakeMove(*p2, *mv)
+	res, err = gs.MakeMove(p2, *mv)
 	if err != nil {
 		t.Log(err)
 	}
@@ -722,42 +722,42 @@ func TestCheckWinCrossCellEndVER(t *testing.T) {
 
 	// first round
 	mv, _ := InitMove(2, 2, 0)
-	res, _ := gs.MakeMove(*p1, *mv)
+	res, _ := gs.MakeMove(p1, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(0, 0, 1)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(0, 0, 2)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(1, 2, 0)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 	assert.Equal(t, false, res)
 	t.Log(gs)
 
 	// second round
 	mv, _ = InitMove(0, 2, 2)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(1, 1, 0)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(2, 2, 1)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(2, 1, 2)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 	assert.Equal(t, false, res)
 
 	// third round
 	mv, _ = InitMove(1, 2, 1)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 
 	assert.Equal(t, true, res)
 
@@ -765,7 +765,7 @@ func TestCheckWinCrossCellEndVER(t *testing.T) {
 	t.Log(gs)
 
 	mv, _ = InitMove(1, 0, 2)
-	res, err = gs.MakeMove(*p2, *mv)
+	res, err = gs.MakeMove(p2, *mv)
 	if err != nil {
 		t.Log(err)
 	}
@@ -794,38 +794,38 @@ func TestCheckWinCrossCellStartNEG_D2(t *testing.T) {
 	}
 
 	mv, _ := InitMove(0, 0, 0)
-	res, _ := gs.MakeMove(*p1, *mv)
+	res, _ := gs.MakeMove(p1, *mv)
 
 	mv, _ = InitMove(0, 0, 1)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 
 	mv, _ = InitMove(0, 0, 2)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 
 	mv, _ = InitMove(2, 2, 0)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 
 	//
 	mv, _ = InitMove(1, 1, 0)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 
 	mv, _ = InitMove(1, 1, 0)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 
 	mv, _ = InitMove(2, 2, 1)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 
 	mv, _ = InitMove(2, 1, 2)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 
 	//
 	mv, _ = InitMove(2, 2, 0)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 	t.Log(res)
 	t.Log(gs)
 
 	mv, _ = InitMove(1, 0, 2)
-	res, err = gs.MakeMove(*p2, *mv)
+	res, err = gs.MakeMove(p2, *mv)
 	if err != nil {
 		t.Log(err)
 	}
@@ -854,46 +854,46 @@ func TestCheckWinCrossCellMidNEG_D2(t *testing.T) {
 
 	// first round
 	mv, _ := InitMove(1, 1, 1)
-	res, _ := gs.MakeMove(*p1, *mv)
+	res, _ := gs.MakeMove(p1, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(0, 0, 0)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(0, 0, 2)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(2, 2, 0)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 	assert.Equal(t, false, res)
 
 	// second round
 	mv, _ = InitMove(0, 0, 1)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(1, 1, 0)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(2, 2, 2)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(2, 1, 2)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 	assert.Equal(t, false, res)
 
 	// third round
 	mv, _ = InitMove(2, 2, 1)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 	t.Logf("res: %v", res)
 	assert.Equal(t, true, res)
 
 	mv, _ = InitMove(1, 0, 2)
-	res, err = gs.MakeMove(*p2, *mv)
+	res, err = gs.MakeMove(p2, *mv)
 	if err != nil {
 		t.Log(err)
 	}
@@ -922,42 +922,42 @@ func TestCheckWinCrossCellEndNEG_D2(t *testing.T) {
 
 	// first round
 	mv, _ := InitMove(2, 2, 2)
-	res, _ := gs.MakeMove(*p1, *mv)
+	res, _ := gs.MakeMove(p1, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(2, 2, 1)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(0, 0, 1)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(2, 2, 0)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 	assert.Equal(t, false, res)
 	t.Log(gs)
 
 	// second round
 	mv, _ = InitMove(0, 0, 2)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(1, 1, 0)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(2, 1, 0)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(2, 1, 2)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 	assert.Equal(t, false, res)
 
 	// third round
 	mv, _ = InitMove(1, 1, 2)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 
 	assert.Equal(t, true, res)
 
@@ -965,7 +965,7 @@ func TestCheckWinCrossCellEndNEG_D2(t *testing.T) {
 	t.Log(gs)
 
 	mv, _ = InitMove(1, 0, 2)
-	res, err = gs.MakeMove(*p2, *mv)
+	res, err = gs.MakeMove(p2, *mv)
 	if err != nil {
 		t.Log(err)
 	}
@@ -994,46 +994,46 @@ func TestCheckWinCrossCellStartPOS_D2(t *testing.T) {
 	}
 
 	mv, _ := InitMove(0, 2, 0)
-	res, _ := gs.MakeMove(*p1, *mv)
+	res, _ := gs.MakeMove(p1, *mv)
 	// t.Log(res)
 	// t.Log(gs)
 
 	mv, _ = InitMove(0, 0, 1)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 	// t.Log(gs)
 
 	mv, _ = InitMove(0, 0, 2)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 	// t.Log(gs)
 
 	mv, _ = InitMove(2, 2, 0)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 	t.Log(gs)
 
 	//
 	mv, _ = InitMove(1, 1, 0)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 	// t.Log(gs)
 
 	mv, _ = InitMove(1, 1, 1)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 	// t.Log(gs)
 
 	mv, _ = InitMove(2, 2, 1)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 	// t.Log(gs)
 
 	mv, _ = InitMove(2, 1, 2)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 
 	//
 	mv, _ = InitMove(2, 0, 0)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 	t.Log(res)
 	t.Log(gs)
 
 	mv, _ = InitMove(1, 0, 2)
-	res, err = gs.MakeMove(*p2, *mv)
+	res, err = gs.MakeMove(p2, *mv)
 	if err != nil {
 		t.Log(err)
 	}
@@ -1062,42 +1062,42 @@ func TestCheckWinCrossCellMidPOS_D2(t *testing.T) {
 
 	// first round
 	mv, _ := InitMove(1, 1, 1)
-	res, _ := gs.MakeMove(*p1, *mv)
+	res, _ := gs.MakeMove(p1, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(0, 0, 1)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(0, 0, 2)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(2, 2, 0)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 	assert.Equal(t, false, res)
 	t.Log(gs)
 
 	// second round
 	mv, _ = InitMove(0, 2, 1)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(1, 1, 0)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(2, 2, 1)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(2, 1, 2)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 	assert.Equal(t, false, res)
 
 	// third round
 	mv, _ = InitMove(2, 0, 1)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 
 	assert.Equal(t, true, res)
 
@@ -1105,7 +1105,7 @@ func TestCheckWinCrossCellMidPOS_D2(t *testing.T) {
 	t.Log(gs)
 
 	mv, _ = InitMove(1, 0, 2)
-	res, err = gs.MakeMove(*p2, *mv)
+	res, err = gs.MakeMove(p2, *mv)
 	if err != nil {
 		t.Log(err)
 	}
@@ -1134,38 +1134,38 @@ func TestCheckWinCrossCellStartHOR2(t *testing.T) {
 	}
 
 	mv, _ := InitMove(0, 0, 0)
-	res, _ := gs.MakeMove(*p1, *mv)
+	res, _ := gs.MakeMove(p1, *mv)
 
 	mv, _ = InitMove(0, 0, 1)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 
 	mv, _ = InitMove(0, 2, 1)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 
 	mv, _ = InitMove(2, 2, 0)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 
 	//
 	mv, _ = InitMove(0, 2, 0)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 
 	mv, _ = InitMove(1, 1, 0)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 
 	mv, _ = InitMove(2, 2, 1)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 
 	mv, _ = InitMove(2, 1, 2)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 
 	//
 	mv, _ = InitMove(0, 1, 0)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 	t.Log(res)
 	t.Log(gs)
 
 	mv, _ = InitMove(1, 0, 2)
-	res, err = gs.MakeMove(*p2, *mv)
+	res, err = gs.MakeMove(p2, *mv)
 	if err != nil {
 		t.Log(err)
 	}
@@ -1193,38 +1193,38 @@ func TestCheckWinCrossCellMidHOR2(t *testing.T) {
 	}
 
 	mv, _ := InitMove(0, 1, 1)
-	res, _ := gs.MakeMove(*p1, *mv)
+	res, _ := gs.MakeMove(p1, *mv)
 
 	mv, _ = InitMove(0, 0, 1)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 
 	mv, _ = InitMove(0, 2, 2)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 
 	mv, _ = InitMove(2, 2, 0)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 
 	//
 	mv, _ = InitMove(0, 0, 1)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 
 	mv, _ = InitMove(1, 1, 0)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 
 	mv, _ = InitMove(2, 2, 1)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 
 	mv, _ = InitMove(2, 1, 2)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 
 	//
 	mv, _ = InitMove(0, 2, 1)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 	t.Log(res)
 	t.Log(gs)
 
 	mv, _ = InitMove(1, 0, 2)
-	res, err = gs.MakeMove(*p2, *mv)
+	res, err = gs.MakeMove(p2, *mv)
 	if err != nil {
 		t.Log(err)
 	}
@@ -1253,42 +1253,42 @@ func TestCheckWinCrossCellEndHOR2(t *testing.T) {
 
 	// first round
 	mv, _ := InitMove(2, 2, 0)
-	res, _ := gs.MakeMove(*p1, *mv)
+	res, _ := gs.MakeMove(p1, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(0, 0, 1)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(0, 0, 2)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(1, 2, 0)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 	assert.Equal(t, false, res)
 	t.Log(gs)
 
 	// second round
 	mv, _ = InitMove(2, 0, 0)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(1, 1, 0)
-	res, _ = gs.MakeMove(*p2, *mv)
+	res, _ = gs.MakeMove(p2, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(2, 2, 1)
-	res, _ = gs.MakeMove(*p3, *mv)
+	res, _ = gs.MakeMove(p3, *mv)
 	assert.Equal(t, false, res)
 
 	mv, _ = InitMove(2, 1, 2)
-	res, _ = gs.MakeMove(*p4, *mv)
+	res, _ = gs.MakeMove(p4, *mv)
 	assert.Equal(t, false, res)
 
 	// third round
 	mv, _ = InitMove(2, 1, 0)
-	res, _ = gs.MakeMove(*p1, *mv)
+	res, _ = gs.MakeMove(p1, *mv)
 
 	assert.Equal(t, true, res)
 
@@ -1296,7 +1296,7 @@ func TestCheckWinCrossCellEndHOR2(t *testing.T) {
 	t.Log(gs)
 
 	mv, _ = InitMove(1, 0, 2)
-	res, err = gs.MakeMove(*p2, *mv)
+	res, err = gs.MakeMove(p2, *mv)
 	if err != nil {
 		t.Log(err)
 	}

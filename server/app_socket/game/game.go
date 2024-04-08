@@ -8,8 +8,25 @@ import (
 	"triple-ts-golang/game"
 
 	socketio "github.com/googollee/go-socket.io"
+	"golang.org/x/tools/go/analysis/passes/printf"
 )
 
+type (
+	ConnCtx struct {
+		RoomId   string `json:"roomId"`
+		PlayerId int    `json:"playerId"`
+	}
+)
+
+// client to server
+type (
+	MakeMoveEventReq struct {
+		PlayerId int       `json:"playerId"`
+		Move     game.Move `json:"move"`
+	}
+)
+
+// server to client
 type (
 	ErrorEventRes struct {
 		Message string `json:"message"`
@@ -25,21 +42,18 @@ type (
 		RoomState  game.RoomCtx `json:"roomState"`
 	}
 	ReadyEventRes struct {
-		PlayerId      int  `json:"playerId"`
-		IsReady       bool `json:"isReady"`
-		IsGameStarted bool `json:"isGameStarted"`
+		PlayerId      int          `json:"playerId"`
+		IsReady       bool         `json:"isReady"`
+		IsGameStarted bool         `json:"isGameStarted"`
+		RoomState     game.RoomCtx `json:"roomState"`
 	}
-	MoveEventRes struct {
-		PlayerId int       `json:"playerId"`
-		Move     game.Move `json:"move"`
+	OtherPlayerMakeMoveEventRes struct {
+		PlayerId  int          `json:"playerId"`
+		Move      game.Move    `json:"move"`
+		RoomState game.RoomCtx `json:"roomState"`
 	}
 	WinnerEventRes struct {
 		PlayerId int `json:"playerId"`
-	}
-
-	ConnCtx struct {
-		RoomId   string `json:"roomId"`
-		PlayerId int    `json:"playerId"`
 	}
 )
 
@@ -51,21 +65,32 @@ const (
 	maxConn    = 4
 
 	// client to server events
-	sendMsgEvent     = "sendMsg"
-	toggleReadyEvent = "toggleReady"
+	sendMsgEvent        = "sendMsg"
+	toggleReadyEvent    = "toggleReady"
+	playerMakeMoveEvent = "playerMakeMove"
 
 	// server to client events
-	receiveMsgEvent   = "receiveMsg"
-	createRoomOkEvent = "createRoomOk"
-	joinRoomOkEvent   = "joinRoomOk"
-
-	playerToggleReadyEvent = "playerToggleReady"
+	receiveMsgEvent          = "receiveMsg"
+	createRoomOkEvent        = "createRoomOk"
+	joinRoomOkEvent          = "joinRoomOk"
+	playerToggleReadyEvent   = "playerToggleReady"
+	otherPlayerMakeMoveEvent = "otherPlayerMakeMove"
 )
 
 // TODO, clean up roomStates periodically
 var roomStates = map[string]*game.RoomCtx{}
 
 func InitGameSocketNS(ser *socketio.Server) {
+	//* testing event
+	ser.OnEvent(ns, sendMsgEvent, func(conn socketio.Conn, msg string) {
+		log.Printf("%v onEvent - %v, sid: %v, rooms: %v \n", r, conn.ID(), conn.Rooms())
+
+		for _, r := range conn.Rooms() {
+			ser.BroadcastToRoom(ns, r, receiveMsgEvent, msg)
+		}
+	})
+
+	// create or join room
 	ser.OnConnect(ns, func(conn socketio.Conn) error {
 		log.Printf("%v onConnected, sid: %v \n", r, conn.ID())
 
@@ -97,13 +122,50 @@ func InitGameSocketNS(ser *socketio.Server) {
 		return nil
 	})
 
-	//* testing event
-	ser.OnEvent(ns, sendMsgEvent, func(conn socketio.Conn, msg string) {
-		log.Printf("%v onEvent - 'msg', sid: %v, rooms: %v \n", r, conn.ID(), conn.Rooms())
+	ser.OnEvent(ns, playerMakeMoveEvent, func(conn socketio.Conn, mv game.Move) {
+		log.Printf("make move %v", mv)
 
-		for _, r := range conn.Rooms() {
-			ser.BroadcastToRoom(ns, r, receiveMsgEvent, msg)
+		if err := mv.CheckMove(); err != nil {
+			conn.Emit(errorEvent, ErrorEventRes{
+				Message: err.Error(),
+			})
 		}
+
+		connCtx := conn.Context().(ConnCtx)
+		rid, playerId := connCtx.RoomId, connCtx.PlayerId
+
+		if ctx, ok := roomStates[rid]; ok {
+			player := ctx.FindPlayerByIdx(playerId)
+			win, err := ctx.GameState.MakeMove(player, mv)
+			if err != nil {
+				conn.Emit(errorEvent, ErrorEventRes{
+					Message: err.Error(),
+				})
+			}
+
+			// TODO
+			if win {
+
+			}
+
+			log.Printf("room State after move: %v", ctx.Copy())
+
+			for _, r := range conn.Rooms() {
+				ser.BroadcastToRoom(ns, r, otherPlayerMakeMoveEvent, OtherPlayerMakeMoveEventRes{
+					PlayerId:  playerId,
+					Move:      mv,
+					RoomState: ctx.Copy(),
+				})
+			}
+		} else {
+			log.Println("room not found")
+			err := errors.New("room not found")
+			conn.Emit(errorEvent, ErrorEventRes{
+				Message: err.Error(),
+			})
+			conn.Close()
+		}
+
 	})
 
 	ser.OnEvent(ns, toggleReadyEvent, func(conn socketio.Conn) {
@@ -111,17 +173,7 @@ func InitGameSocketNS(ser *socketio.Server) {
 		rid, playerId := connCtx.RoomId, connCtx.PlayerId
 
 		if ctx, ok := roomStates[rid]; ok {
-			var player *game.Player
-			if playerId == game.P1 {
-				player = &(ctx).P1
-			} else if playerId == game.P2 {
-				player = &(ctx).P2
-			} else if playerId == game.P3 {
-				player = &(ctx).P3
-			} else if playerId == game.P4 {
-				player = &(ctx).P4
-			}
-
+			player := ctx.FindPlayerByIdx(playerId)
 			ctx.ToggleReady(player)
 
 			for _, r := range conn.Rooms() {
@@ -129,6 +181,7 @@ func InitGameSocketNS(ser *socketio.Server) {
 					PlayerId:      playerId,
 					IsReady:       player.IsReady,
 					IsGameStarted: ctx.IsGameStarted,
+					RoomState:     ctx.Copy(),
 				})
 			}
 		} else {
@@ -156,6 +209,7 @@ func InitGameSocketNS(ser *socketio.Server) {
 				PlayerId:      id,
 				IsReady:       false,
 				IsGameStarted: false,
+				RoomState:     (*roomState).Copy(),
 			})
 		}
 

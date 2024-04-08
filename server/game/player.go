@@ -30,6 +30,6 @@ func InitPlayer(id int) (*Player, error) {
 	return res, nil
 }
 
-func (p *Player) canCircleUsed(c int) bool {
+func (p *Player) CanCircleUsed(c int) bool {
 	return !(p.Circles[c] <= 0)
 }

@@ -14,6 +14,7 @@ func createRoom(conn *socketio.Conn, rs *map[string]*game.RoomCtx) error {
 			log.Printf("roomStates[%v]: %v \n", k, v)
 		}
 	}()
+
 	if ctx, err := game.InitRoomCtx(); err != nil {
 		return err
 	} else {

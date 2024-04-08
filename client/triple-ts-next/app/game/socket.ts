@@ -3,19 +3,22 @@
 // @ts-ignore
 import io from "socket.io-client";
 
+export const c2s = {
+  sendMsgEvent: "sendMsg",
+  toggleReadyEvent: "toggleReady",
+  playerMakeMoveEvent: "playerMakeMove",
+};
+
 export const s2c = {
   connectedEvent: "connect",
   disconnectedEvent: "disconnect",
   errorEvent: "error",
 
-  // receiveMsgEvent: "receiveMsg",
+  receiveMsgEvent: "receiveMsg",
   createRoomOkEvent: "createRoomOk",
   joinRoomOkEvent: "joinRoomOk",
   playerToggleReadyEvent: "playerToggleReady",
-};
-export const c2s = {
-  // sendMsgEvent: "sendMsg",
-  toggleReadyEvent: "toggleReady",
+  otherPlayerMakeMoveEvent: "otherPlayerMakeMove",
 };
 
 // Listen for incoming messages

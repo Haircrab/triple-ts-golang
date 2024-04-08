@@ -39,29 +39,29 @@ func InitGameState() *GameState {
 }
 
 // win if true
-func (gs *GameState) MakeMove(pyer Player, mv Move) (bool, error) {
+func (gs *GameState) MakeMove(pyer *Player, mv Move) (bool, error) {
 	if gs.WinnerIdx != -1 {
 		return false, errors.New("Invalid move: the game is over")
 	}
-	if err := checkMove(mv); err != nil {
+	if err := mv.CheckMove(); err != nil {
 		return false, err
 	}
 	// check if move is valid
 	// 1. if player is next player
-	if !gs.checkIsPlayerTurn(pyer) {
+	if !gs.CheckIsPlayerTurn(pyer) {
 		return false, errors.New("Invalid move: it is not your turn dude")
 	}
 	// 2. if player have valid count of the circle using
-	if !pyer.canCircleUsed(mv.x) {
+	if !pyer.CanCircleUsed(mv.X) {
 		return false, errors.New("Invalid move: no remaining selected circle")
 	}
 	// 3. if cell is occupied
-	if gs.Board[mv.r][mv.c][mv.x] != 0 {
+	if gs.Board[mv.R][mv.C][mv.X] != 0 {
 		return false, errors.New("Invalid move: cell is occupied")
 	}
 
 	// mutate board
-	gs.mutCell(mv.r, mv.c, mv.x, pyer.Id)
+	gs.mutCell(mv.R, mv.C, mv.X, pyer.Id)
 	gs.mutNextPlayer()
 
 	// check winning condition
@@ -76,9 +76,9 @@ func (gs *GameState) MakeMove(pyer Player, mv Move) (bool, error) {
 
 // player's move should be already checked and made to the baord
 // tranverse board and check winning conditions
-func (gs *GameState) checkWin(pyer Player, mv Move) bool {
+func (gs *GameState) checkWin(pyer *Player, mv Move) bool {
 	// board states
-	currCell := gs.Board[mv.r][mv.c]
+	currCell := gs.Board[mv.R][mv.C]
 
 	// check if player occupied all slots in same cell
 	if checkSameCell(pyer, currCell) {
@@ -88,7 +88,7 @@ func (gs *GameState) checkWin(pyer Player, mv Move) bool {
 	// check all direction
 	// TODO: seperate checking condition in parallel
 	for _, plane := range PLANES {
-		if checkCrossCells(pyer.Id, &(gs.Board), plane, mv.r, mv.c, mv.x, N) {
+		if checkCrossCells(pyer.Id, &(gs.Board), plane, mv.R, mv.C, mv.X, N) {
 			return true
 		}
 	}
@@ -96,7 +96,7 @@ func (gs *GameState) checkWin(pyer Player, mv Move) bool {
 	return false
 }
 
-func checkSameCell(pyer Player, cell boardCellState) bool {
+func checkSameCell(pyer *Player, cell boardCellState) bool {
 	for _, v := range cell {
 		if v != pyer.Id {
 			return false
