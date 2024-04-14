@@ -48,7 +48,7 @@ func (gs *GameState) mutCell(r, c, x, pyerIdx int) error {
 		return errors.New("circle value must be 0 to 2")
 	}
 
-	board := &(gs.Board)
+	board := (gs.Board)
 
 	fmt.Printf("player %v making move in %v %v %v \n", pyerIdx, r, c, x)
 	board[r][c][x] = pyerIdx

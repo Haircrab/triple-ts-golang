@@ -8,7 +8,6 @@ import (
 	"triple-ts-golang/game"
 
 	socketio "github.com/googollee/go-socket.io"
-	"golang.org/x/tools/go/analysis/passes/printf"
 )
 
 type (
@@ -83,8 +82,6 @@ var roomStates = map[string]*game.RoomCtx{}
 func InitGameSocketNS(ser *socketio.Server) {
 	//* testing event
 	ser.OnEvent(ns, sendMsgEvent, func(conn socketio.Conn, msg string) {
-		log.Printf("%v onEvent - %v, sid: %v, rooms: %v \n", r, conn.ID(), conn.Rooms())
-
 		for _, r := range conn.Rooms() {
 			ser.BroadcastToRoom(ns, r, receiveMsgEvent, msg)
 		}
@@ -148,7 +145,7 @@ func InitGameSocketNS(ser *socketio.Server) {
 
 			}
 
-			log.Printf("room State after move: %v", ctx.Copy())
+			log.Printf("room State after move: %v", (*ctx.GameState.Board))
 
 			for _, r := range conn.Rooms() {
 				ser.BroadcastToRoom(ns, r, otherPlayerMakeMoveEvent, OtherPlayerMakeMoveEventRes{

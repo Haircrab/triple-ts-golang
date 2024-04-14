@@ -2,12 +2,13 @@ package game
 
 import (
 	"errors"
+	"log"
 )
 
 const (
-	// count
 	N                   = 3
 	ROWS, COLS, CIRCLES = N, N, N
+	BOARD_DEFAULT_VAL   = -1
 )
 
 var (
@@ -19,9 +20,9 @@ var (
 )
 
 type GameState struct {
-	Board            boardState `json:"board"`
-	PlayerSeq        [4]int     `json:"playerSeq"`
-	NextPlayerSeqIdx int        `json:"nextPlayerSeqIdx"`
+	Board            *boardState `json:"board"`
+	PlayerSeq        [4]int      `json:"playerSeq"`
+	NextPlayerSeqIdx int         `json:"nextPlayerSeqIdx"`
 
 	WinnerIdx int `json:"winnerIdx"`
 }
@@ -30,8 +31,26 @@ type (
 	boardCellState [CIRCLES]int // 0-5, 0 == unoccupied, 1-4 == player id
 )
 
+func InitBoardState() *boardState {
+	bs := &boardState{{
+		{-1, -1, -1},
+		{-1, -1, -1},
+		{-1, -1, -1},
+	}, {
+		{-1, -1, -1},
+		{-1, -1, -1},
+		{-1, -1, -1},
+	}, {
+		{-1, -1, -1},
+		{-1, -1, -1},
+		{-1, -1, -1},
+	}}
+	return bs
+}
+
 func InitGameState() *GameState {
 	return &GameState{
+		Board:            InitBoardState(),
 		PlayerSeq:        [4]int{P1, P2, P3, P4},
 		NextPlayerSeqIdx: 0,
 		WinnerIdx:        -1,
@@ -40,6 +59,7 @@ func InitGameState() *GameState {
 
 // win if true
 func (gs *GameState) MakeMove(pyer *Player, mv Move) (bool, error) {
+	log.Printf("make move in MakeMove %v", mv)
 	if gs.WinnerIdx != -1 {
 		return false, errors.New("Invalid move: the game is over")
 	}
@@ -56,11 +76,12 @@ func (gs *GameState) MakeMove(pyer *Player, mv Move) (bool, error) {
 		return false, errors.New("Invalid move: no remaining selected circle")
 	}
 	// 3. if cell is occupied
-	if gs.Board[mv.R][mv.C][mv.X] != 0 {
+	if gs.Board[mv.R][mv.C][mv.X] != BOARD_DEFAULT_VAL {
 		return false, errors.New("Invalid move: cell is occupied")
 	}
 
 	// mutate board
+	log.Printf("make move before mutCell%v", mv)
 	gs.mutCell(mv.R, mv.C, mv.X, pyer.Id)
 	gs.mutNextPlayer()
 
@@ -88,7 +109,7 @@ func (gs *GameState) checkWin(pyer *Player, mv Move) bool {
 	// check all direction
 	// TODO: seperate checking condition in parallel
 	for _, plane := range PLANES {
-		if checkCrossCells(pyer.Id, &(gs.Board), plane, mv.R, mv.C, mv.X, N) {
+		if checkCrossCells(pyer.Id, (gs.Board), plane, mv.R, mv.C, mv.X, N) {
 			return true
 		}
 	}
